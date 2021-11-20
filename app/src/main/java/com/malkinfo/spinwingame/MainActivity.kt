@@ -1,5 +1,6 @@
 package com.malkinfo.spinwingame
 
+import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
@@ -10,6 +11,13 @@ import android.view.animation.RotateAnimation
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.malkinfo.spinwingame.data.database.model.Food
 
 class MainActivity : AppCompatActivity() ,Animation.AnimationListener{
 
@@ -32,20 +40,32 @@ class MainActivity : AppCompatActivity() ,Animation.AnimationListener{
     /**
      * All the vars you need
      * */
-    val prizes = arrayOf<String>("Bánh Tráng Trộn","Trà Sữa","Trà Tắc",
-                                "Chân Gà Sả Tắc","Hủ Tiếu","Bún Chả Cá",
-                                "Bún Thịt Nướng","Bánh Canh","Tôm Hùm Alaska",
-                                "Trứng Vịt Lộn","Trà Đào Cam Sả","Yagurt Xoài Đá Xay")
+    val prizes = arrayOf<Food>( Food(1,R.drawable.banhtrangtron,"Bánh Tráng Trộn"),
+                                Food(2,R.drawable.trasua,"Trà Sữa"),
+                                Food(3,R.drawable.tratac,"Trà Tắc"),
+                                Food(4,R.drawable.changasatac,"Chân Gà Sả Tắc"),
+                                Food(5,R.drawable.bunchaca,"Bún Chả Cá"),
+                                Food(6,R.drawable.hutieu,"Hủ Tiếu"),
+                                Food(7,R.drawable.bunthitnuong,"Bún Thịt Nướng"),
+                                Food(8,R.drawable.banhcanh,"Bánh Canh"),
+                                Food(9,R.drawable.tomalaska,"Tôm Hùm Alaska"),
+                                Food(10,R.drawable.trungvitlon,"Trứng Vịt Lộn"),
+                                Food(11,R.drawable.tradaocamsa,"Trà Đào Cam Sả"),
+                                Food(12,R.drawable.yagurt,"Yagurt Xoài Đá Xay")
+                                )
     private var mSpinDuration :Long = 0
     private var mSpinRevolution = 0f
     var pointerImageView:ImageView? = null
+    var showFood:ImageView?= null
     var infoText: TextView? = null
     var prizeText = "N/A"
-
+    var img = 0
     private fun intSpinner() {
         pointerImageView = findViewById(R.id.imageWheel)
         infoText = findViewById(R.id.infoText)
+        showFood = findViewById(R.id.imageView)
     }
+
 
     fun startSpinner() {
         mSpinRevolution = 3600f
@@ -58,7 +78,6 @@ class MainActivity : AppCompatActivity() ,Animation.AnimationListener{
         if (count >= 60){
             mSpinDuration = 15000
             mSpinRevolution = (3600 * 3).toFloat()
-
         }
 
         // Final point of rotation defined right here
@@ -69,7 +88,8 @@ class MainActivity : AppCompatActivity() ,Animation.AnimationListener{
         val shift = 0 // shit where the arrow points
         val prizeIndex = (shift + end) % numOfPrizes
 
-        prizeText = "Bạn đã chọn được món : \n ${prizes[prizeIndex]}"
+        prizeText = "Bạn đã chọn được món : \n ${prizes[prizeIndex].name}"
+         img = prizes[prizeIndex].images
 
         val rotateAnim = RotateAnimation(
             0f,mSpinRevolution + end,
@@ -88,9 +108,10 @@ class MainActivity : AppCompatActivity() ,Animation.AnimationListener{
     override fun onAnimationStart(p0: Animation?) {
         infoText!!.text = "Đang chọn món..."
     }
-
+    //When finished choosing food
     override fun onAnimationEnd(p0: Animation?) {
         infoText!!.text = prizeText
+        showFood!!.setImageResource(img)
     }
 
     override fun onAnimationRepeat(p0: Animation?) {}
