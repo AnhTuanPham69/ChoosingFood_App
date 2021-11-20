@@ -1,5 +1,2 @@
-# SpinWinGame
-This is simple Demo Spin Win Game
+# Demo App
 
-
-![spinWin](https://user-images.githubusercontent.com/61373662/139518216-7b8cc2de-4051-4142-86f4-bbbde32b0342.gif)
