@@ -78,8 +78,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="168dp"
-        android:layout_height="142dp"
+        android:layout_width="400dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerInParent="true"
         app:srcCompat="@drawable/banhcanh" />
 
 
